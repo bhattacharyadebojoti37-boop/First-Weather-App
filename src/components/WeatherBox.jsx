@@ -1,60 +1,58 @@
-import React, { useContext, useEffect } from 'react'
-import WeatherFeatures from './WeatherFeatures.jsx'
-import WeatherContext from '../context/WeatherContext.js'
+import React, { useContext, useEffect } from "react";
+import WeatherFeatures from "./WeatherFeatures.jsx";
+import WeatherContext from "../context/WeatherContext.js";
 
 const WeatherBox = () => {
-  const { city, setCity, weatherData, setWeatherData } = useContext(WeatherContext)
+  const { city, setCity, weatherData, setWeatherData } =
+    useContext(WeatherContext);
 
-  const apiKey = import.meta.env.VITE_WEATHER_API_KEY
-  const baseUrl = import.meta.env.VITE_BASE_URL
+  const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   // 🌍 Fetch weather using coordinates (on load)
   useEffect(() => {
-    if (!navigator.geolocation) return
+    if (!navigator.geolocation) return;
 
-    navigator.geolocation.getCurrentPosition(
-      async ({ coords }) => {
-        try {
-          const res = await fetch(
-            `${baseUrl}/current.json?key=${apiKey}&q=${coords.latitude},${coords.longitude}`
-          )
-          const data = await res.json()
+    navigator.geolocation.getCurrentPosition(async ({ coords }) => {
+      try {
+        const res = await fetch(
+          `${baseUrl}/current.json?key=${apiKey}&q=${coords.latitude},${coords.longitude}`
+        );
+        const data = await res.json();
 
-          if (data?.location?.name) {
-            setCity(data.location.name)
-            setWeatherData(data)
-          }
-        } catch (error) {
-          console.log("Geolocation error", error)
+        if (data?.location?.name) {
+          setCity(data.location.name);
+          setWeatherData(data);
         }
+      } catch (error) {
+        console.log("Geolocation error", error);
       }
-    )
-  }, [])
+    });
+  }, []);
 
   // 🔍 Fetch weather by city search
   const handleSearch = async () => {
-    if (!city.trim()) return
+    if (!city.trim()) return;
 
     try {
       const res = await fetch(
         `${baseUrl}/current.json?key=${apiKey}&q=${city}`
-      )
-      const data = await res.json()
+      );
+      const data = await res.json();
 
       if (data?.error) {
-        alert("City not found")
-        return
+        alert("City not found");
+        return;
       }
 
-      setWeatherData(data)
+      setWeatherData(data);
     } catch (error) {
-      console.log("Search error", error)
+      console.log("Search error", error);
     }
-  }
+  };
 
   return (
-    <div className='w-full max-w-[90vh] sm:w-[90vh] bg-gradient-to-r from-teal-50 to-purple-200 backdrop-blur-2xl rounded p-4 sm:p-5 flex flex-col justify-center items-center gap-4 mx-auto'>
-      
+    <div className="w-full max-w-[90vh] sm:w-[90vh] bg-gradient-to-r from-teal-50 to-purple-200 backdrop-blur-2xl rounded p-4 sm:p-5 flex flex-col justify-center items-center gap-4 mx-auto">
       {/* 🔍 SEARCH BAR */}
       <div className="flex flex-col sm:flex-row gap-2 w-full">
         <input
@@ -77,7 +75,7 @@ const WeatherBox = () => {
       {/* 🌦️ WEATHER DETAILS */}
       {weatherData && <WeatherFeatures />}
     </div>
-  )
-}
+  );
+};
 
-export default WeatherBox
+export default WeatherBox;

@@ -1,64 +1,62 @@
-import {
-  Droplets,
-  Gauge,
-  Thermometer,
-  ThermometerSun
-} from "lucide-react"
-import React,{ useContext, useEffect } from "react"
-import WeatherContext from "../context/WeatherContext"
+import { Droplets, Gauge, Thermometer, ThermometerSun } from "lucide-react";
+import React, { useContext, useEffect } from "react";
+import WeatherContext from "../context/WeatherContext";
 
 const WeatherFeatures = () => {
-  const { weatherData, setWeatherData, city } = useContext(WeatherContext)
+  const { weatherData, setWeatherData, city } = useContext(WeatherContext);
 
-  const apiKey = import.meta.env.VITE_WEATHER_API_KEY
-  const baseUrl = import.meta.env.VITE_BASE_URL
+  const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
-    if (!city) return
+    if (!city) return;
 
     const fetchWeatherData = async () => {
       try {
         const res = await fetch(
           `${baseUrl}/current.json?key=${apiKey}&q=${city}`
-        )
-        const data = await res.json()
-        setWeatherData(data)
+        );
+        const data = await res.json();
+        setWeatherData(data);
       } catch (error) {
-        console.log("Error fetching weather data", error)
+        console.log("Error fetching weather data", error);
       }
-    }
+    };
 
-    fetchWeatherData()
-  }, [city])
+    fetchWeatherData();
+  }, [city]);
 
-  if (!weatherData) return null
+  if (!weatherData) return null;
 
   const features = [
     {
       label: "Humidity",
-      value: `${weatherData.current.humidity}%`,
-      icon: Droplets
+      value: `${weatherData.current ? weatherData.current.humidity : "NIL"}%`,
+      icon: Droplets,
     },
     {
       label: "Pressure",
-      value: `${weatherData.current.pressure_mb} hPa`,
-      icon: Gauge
+      value: `${
+        weatherData.current ? weatherData.current.pressure_mb : "NIL"
+      } hPa`,
+      icon: Gauge,
     },
     {
       label: "Temperature",
-      value: `${weatherData.current.temp_c}°C`,
-      icon: Thermometer
+      value: `${weatherData.current ? weatherData.current.temp_c : "NIL"}°C`,
+      icon: Thermometer,
     },
     {
       label: "Feels Like",
-      value: `${weatherData.current.feelslike_c}°C`,
-      icon: ThermometerSun
-    }
-  ]
+      value: `${
+        weatherData.current ? weatherData.current.feelslike_c : "NIL"
+      }°C`,
+      icon: ThermometerSun,
+    },
+  ];
 
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
-
       {/* 🌤️ FIRST BOX – CONDITION */}
       <div className="flex flex-col sm:flex-row items-center gap-4 bg-white/30 backdrop-blur-lg rounded-xl p-4 shadow-sm w-full justify-center text-center sm:text-left">
         <div className="p-2 rounded-full bg-white/50">
@@ -98,7 +96,7 @@ const WeatherFeatures = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default WeatherFeatures
+export default WeatherFeatures;
