@@ -59,8 +59,8 @@ const WeatherFeatures = () => {
   return (
     <div className="flex flex-col justify-center items-center gap-4 w-full">
 
-      {/* 🌤️ FIRST BOX — CONDITION */}
-      <div className="flex items-center gap-4 bg-white/30 backdrop-blur-lg rounded-xl p-4 shadow-sm w-full justify-center">
+      {/* 🌤️ FIRST BOX – CONDITION */}
+      <div className="flex flex-col sm:flex-row items-center gap-4 bg-white/30 backdrop-blur-lg rounded-xl p-4 shadow-sm w-full justify-center text-center sm:text-left">
         <div className="p-2 rounded-full bg-white/50">
           <img
             src={weatherData.current.condition.icon}
@@ -80,7 +80,7 @@ const WeatherFeatures = () => {
       </div>
 
       {/* 📊 GRID FEATURES */}
-      <div className="grid grid-cols-2 gap-4 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
         {features.map((item, index) => (
           <div
             key={index}

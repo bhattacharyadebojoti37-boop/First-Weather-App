@@ -53,10 +53,10 @@ const WeatherBox = () => {
   }
 
   return (
-    <div className='w-[90vh] bg-gradient-to-r from-teal-50 to-purple-200 backdrop-blur-2xl rounded p-5 flex flex-col justify-center items-center gap-4'>
+    <div className='w-full max-w-[90vh] sm:w-[90vh] bg-gradient-to-r from-teal-50 to-purple-200 backdrop-blur-2xl rounded p-4 sm:p-5 flex flex-col justify-center items-center gap-4 mx-auto'>
       
       {/* 🔍 SEARCH BAR */}
-      <div className="flex gap-2 w-full">
+      <div className="flex flex-col sm:flex-row gap-2 w-full">
         <input
           type="text"
           placeholder="Enter City Name"
@@ -68,7 +68,7 @@ const WeatherBox = () => {
 
         <button
           onClick={handleSearch}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition whitespace-nowrap"
         >
           Search
         </button>
